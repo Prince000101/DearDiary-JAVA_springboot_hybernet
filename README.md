@@ -100,5 +100,3 @@ deardiary/
 
 This project is licensed under the **Apache License 2.0**.
 Feel free to use and modify it for personal or educational purposes.
-
-# DearDiary-JAVA_springboot_hybernet

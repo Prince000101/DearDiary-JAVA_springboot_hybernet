@@ -13,3 +13,20 @@ metrics:
   volumes:
     - metrics_data:/var/lib/data
   restart: unless-stopped
+
+
+api:
+  image: python:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.api
+    args:
+      NODE_ENV: production
+  ports:
+    - "5000:5000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=3600
+  volumes:
+    - api_data:/var/lib/data
+  restart: unless-stopped

@@ -30,3 +30,20 @@ api:
   volumes:
     - api_data:/var/lib/data
   restart: unless-stopped
+
+
+utils:
+  image: alpine:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.utils
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=INFO
+    - CACHE_TTL=3600
+  volumes:
+    - utils_data:/var/lib/data
+  restart: unless-stopped

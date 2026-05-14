@@ -28,3 +28,16 @@
     box-shadow: var(--shadow-md);
     transition: box-shadow 0.2s ease;
 }
+
+
+@media (max-width: 768px) {
+    .table-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .table-header {
+        font-size: var(--font-size-lg);
+        padding: var(--spacing-sm);
+    }
+}

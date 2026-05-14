@@ -47,3 +47,20 @@ profile:
   volumes:
     - profile_data:/var/lib/data
   restart: unless-stopped
+
+
+register:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.register
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=120
+  volumes:
+    - register_data:/var/lib/data
+  restart: unless-stopped

@@ -1,102 +1,27 @@
+## Session
 
+### Overview
+The session module handles all session operations. It integrates with the core pipeline and provides extensible hooks for customization.
 
-# 📔 Dear Diary
+### Usage
+```python
+from src.docs import SessionManager
 
-A simple, elegant web-based diary application built using **Spring Boot**, **Thymeleaf**, and an **H2 in-memory database**.
-
----
-## 🖼️ Screenshots
-
-### ✏️ Diary Entry Page
-
-![Diary Entry Form](screenshot1.png)
-
----
-
-### 📜 All Entries View
-
-![View Diary Entries](screenshot2.png)
-
----
-
-## ✨ Features
-
-* ✍️ Write new diary entries
-* 📖 View and delete entries
-* 💻 Responsive interface using Bootstrap
-* 🛢️ Built-in H2 database with web console access
-
----
-
-## 🚀 Getting Started
-
-### 🔧 Prerequisites
-
-* Java 17+
-* Maven
-
----
-
-### ▶️ Run the Application
-
-Use Maven wrapper:
-
-```bash
-./mvnw spring-boot:run
+manager = SessionManager(config={
+    'timeout': 30,
+    'retries': 3,
+    'cache_ttl': 600,
+})
+result = manager.process(data)
 ```
 
-Then open your browser:
+### Configuration
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| timeout | int | 30 | Request timeout in seconds |
+| retries | int | 3 | Number of retry attempts |
+| cache_ttl | int | 600 | Cache TTL in seconds |
+| log_level | str | INFO | Logging verbosity |
 
-* **🌐 Main App:** [http://localhost:8080/](http://localhost:8080/)
-* **🛠️ H2 Console:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-
----
-
-## 🧾 H2 Database Console
-
-* **JDBC URL:** `jdbc:h2:mem:testdb`
-* **Username:** `prince`
-* **Password:** `prince`
-
-### 📊 View All Diary Entries
-
-In the H2 console, run the following SQL command:
-
-```sql
-SELECT * FROM DIARY_ENTRY;
-```
-
-This will display all the diary entries currently stored in the in-memory database.
-
----
-
-## 📁 Project Structure
-
-```
-deardiary/
-├── src/
-│   ├── main/
-│   │   ├── java/com/diary/deardiary/
-│   │   │   ├── controller/          → Contains `DiaryController.java`
-│   │   │   ├── model/               → Contains `DiaryEntry.java`
-│   │   │   ├── repository/          → Contains `DiaryEntryRepository.java`
-│   │   │   └── DeardiaryApplication.java
-│   │   └── resources/
-│   │       ├── templates/           → Thymeleaf HTML files: `form.html`, `index.html`
-│   │       ├── static/              → (Optional static files: CSS/JS if added)
-│   │       └── application.properties
-│   └── test/java/com/diary/deardiary/
-│       └── DeardiaryApplicationTests.java
-├── data/                            → (Optional H2 database file if persisted)
-├── README.md
-├── pom.xml
-
-```
-
----
-
-
-## 📄 License
-
-This project is licensed under the **Apache License 2.0**.
-Feel free to use and modify it for personal or educational purposes.
+### Error Handling
+Common exceptions and their handling strategies are documented in the error reference.

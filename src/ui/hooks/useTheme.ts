@@ -31,3 +31,21 @@ export function validateConfig(data: ConfigInput): ValidationResult {
         errors,
     };
 }
+
+
+export async function fetchLogger(signal?: AbortSignal): Promise<LoggerResponse> {
+    const response = await fetch(`/api/v1/loggers`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`,
+        },
+        signal,
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new ApiError(error.message, response.status);
+    }
+
+    return response.json();
+}

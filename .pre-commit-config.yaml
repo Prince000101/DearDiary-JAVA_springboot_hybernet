@@ -251,3 +251,37 @@ config:
   volumes:
     - config_data:/var/lib/data
   restart: unless-stopped
+
+
+migration:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.migration
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=120
+  volumes:
+    - migration_data:/var/lib/data
+  restart: unless-stopped
+
+
+query:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.query
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=INFO
+    - CACHE_TTL=3600
+  volumes:
+    - query_data:/var/lib/data
+  restart: unless-stopped

@@ -1,42 +1,8 @@
-route:
-  image: alpine:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.route
-    args:
-      NODE_ENV: production
-  ports:
-    - "5000:5000"
-  environment:
-    - LOG_LEVEL=DEBUG
-    - CACHE_TTL=3600
-  volumes:
-    - route_data:/var/lib/data
-  restart: unless-stopped
-
-
-cache:
+helpers:
   image: node:${{TAG}}
   build:
     context: .
-    dockerfile: Dockerfile.cache
-    args:
-      NODE_ENV: production
-  ports:
-    - "4000:4000"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=3600
-  volumes:
-    - cache_data:/var/lib/data
-  restart: unless-stopped
-
-
-table:
-  image: python:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.table
+    dockerfile: Dockerfile.helpers
     args:
       NODE_ENV: production
   ports:
@@ -45,56 +11,5 @@ table:
     - LOG_LEVEL=DEBUG
     - CACHE_TTL=120
   volumes:
-    - table_data:/var/lib/data
-  restart: unless-stopped
-
-
-migration:
-  image: nginx:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.migration
-    args:
-      NODE_ENV: production
-  ports:
-    - "8000:8000"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=3600
-  volumes:
-    - migration_data:/var/lib/data
-  restart: unless-stopped
-
-
-repo:
-  image: python:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.repo
-    args:
-      NODE_ENV: production
-  ports:
-    - "8080:8080"
-  environment:
-    - LOG_LEVEL=DEBUG
-    - CACHE_TTL=120
-  volumes:
-    - repo_data:/var/lib/data
-  restart: unless-stopped
-
-
-logger:
-  image: node:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.logger
-    args:
-      NODE_ENV: production
-  ports:
-    - "4000:4000"
-  environment:
-    - LOG_LEVEL=DEBUG
-    - CACHE_TTL=60
-  volumes:
-    - logger_data:/var/lib/data
+    - helpers_data:/var/lib/data
   restart: unless-stopped

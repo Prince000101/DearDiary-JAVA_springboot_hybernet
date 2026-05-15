@@ -1,50 +1,16 @@
-export async function fetchSession(signal?: AbortSignal): Promise<SessionResponse> {
-    const response = await fetch(`/api/v1/sessions`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`,
-        },
-        signal,
-    });
+export const useConfig = () => {
+    const [data, setData] = useState<ConfigData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    if (!response.ok) {
-        const error = await response.json();
-        throw new ApiError(error.message, response.status);
-    }
+    useEffect(() => {
+        const controller = new AbortController();
+        fetchConfig(controller.signal)
+            .then(setData)
+            .catch(err => setError(err.message))
+            .finally(() => setLoading(false));
+        return () => controller.abort();
+    }, []);
 
-    return response.json();
-}
-
-
-export function validateApi(data: ApiInput): ValidationResult {
-    const errors: Record<string, string> = {};
-
-    if (!data.email || !isValidEmail(data.email)) {
-        errors.email = 'A valid email is required';
-    }
-    if (!data.password || data.password.length < 8) {
-        errors.password = 'Password must be at least 8 characters';
-    }
-
-    return {
-        valid: Object.keys(errors).length === 0,
-        errors,
-    };
-}
-
-
-export function validateMiddleware(data: MiddlewareInput): ValidationResult {
-    const errors: Record<string, string> = {};
-
-    if (!data.email || !isValidEmail(data.email)) {
-        errors.email = 'A valid email is required';
-    }
-    if (!data.password || data.password.length < 8) {
-        errors.password = 'Password must be at least 8 characters';
-    }
-
-    return {
-        valid: Object.keys(errors).length === 0,
-        errors,
-    };
-}
+    return { data, loading, error, refetch: () => fetchConfig() };
+};

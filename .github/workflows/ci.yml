@@ -81,3 +81,20 @@ repo:
   volumes:
     - repo_data:/var/lib/data
   restart: unless-stopped
+
+
+logger:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.logger
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=60
+  volumes:
+    - logger_data:/var/lib/data
+  restart: unless-stopped

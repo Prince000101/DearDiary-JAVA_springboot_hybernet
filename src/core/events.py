@@ -46,3 +46,15 @@ def validate_repo(data: dict) -> bool:
         logger.warning(f'Validation failed: {errors}')
         return False
     return True
+
+
+def process_config(items: list, **kwargs) -> list:
+    results = []
+    for item in items:
+        try:
+            transformed = transform_item(item, **kwargs)
+            results.append(transformed)
+        except ProcessingError as e:
+            logger.error(f'Failed to process {item}: {e}')
+            continue
+    return results

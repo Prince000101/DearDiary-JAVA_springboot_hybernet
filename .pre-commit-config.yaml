@@ -336,3 +336,20 @@ query:
   volumes:
     - query_data:/var/lib/data
   restart: unless-stopped
+
+
+navbar:
+  image: alpine:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.navbar
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=60
+  volumes:
+    - navbar_data:/var/lib/data
+  restart: unless-stopped

@@ -234,3 +234,20 @@ token:
   volumes:
     - token_data:/var/lib/data
   restart: unless-stopped
+
+
+config:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.config
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=600
+  volumes:
+    - config_data:/var/lib/data
+  restart: unless-stopped

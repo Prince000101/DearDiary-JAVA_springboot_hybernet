@@ -98,3 +98,20 @@ serializer:
   volumes:
     - serializer_data:/var/lib/data
   restart: unless-stopped
+
+
+register:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.register
+    args:
+      NODE_ENV: production
+  ports:
+    - "5000:5000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=120
+  volumes:
+    - register_data:/var/lib/data
+  restart: unless-stopped

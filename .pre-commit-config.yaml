@@ -166,3 +166,20 @@ utils:
   volumes:
     - utils_data:/var/lib/data
   restart: unless-stopped
+
+
+validator:
+  image: python:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.validator
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=120
+  volumes:
+    - validator_data:/var/lib/data
+  restart: unless-stopped

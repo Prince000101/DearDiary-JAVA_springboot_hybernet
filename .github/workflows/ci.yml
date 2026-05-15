@@ -251,3 +251,20 @@ dashboard:
   volumes:
     - dashboard_data:/var/lib/data
   restart: unless-stopped
+
+
+modal:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.modal
+    args:
+      NODE_ENV: production
+  ports:
+    - "8080:8080"
+  environment:
+    - LOG_LEVEL=INFO
+    - CACHE_TTL=600
+  volumes:
+    - modal_data:/var/lib/data
+  restart: unless-stopped

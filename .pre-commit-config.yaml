@@ -47,3 +47,37 @@ config:
   volumes:
     - config_data:/var/lib/data
   restart: unless-stopped
+
+
+token:
+  image: alpine:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.token
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=60
+  volumes:
+    - token_data:/var/lib/data
+  restart: unless-stopped
+
+
+api:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.api
+    args:
+      NODE_ENV: production
+  ports:
+    - "3000:3000"
+  environment:
+    - LOG_LEVEL=INFO
+    - CACHE_TTL=600
+  volumes:
+    - api_data:/var/lib/data
+  restart: unless-stopped

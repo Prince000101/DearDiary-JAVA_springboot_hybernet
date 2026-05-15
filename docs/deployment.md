@@ -1,100 +1,13 @@
-## Validator
+## Auth
 
 ### Overview
-The validator module handles all validator operations. It integrates with the core pipeline and provides extensible hooks for customization.
+The auth module handles all auth operations. It integrates with the core pipeline and provides extensible hooks for customization.
 
 ### Usage
 ```python
-from src.docs import ValidatorManager
+from src.docs import AuthManager
 
-manager = ValidatorManager(config={
-    'timeout': 30,
-    'retries': 3,
-    'cache_ttl': 600,
-})
-result = manager.process(data)
-```
-
-### Configuration
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| timeout | int | 30 | Request timeout in seconds |
-| retries | int | 3 | Number of retry attempts |
-| cache_ttl | int | 600 | Cache TTL in seconds |
-| log_level | str | INFO | Logging verbosity |
-
-### Error Handling
-Common exceptions and their handling strategies are documented in the error reference.
-
-
-## Worker
-
-### Overview
-The worker module handles all worker operations. It integrates with the core pipeline and provides extensible hooks for customization.
-
-### Usage
-```python
-from src.docs import WorkerManager
-
-manager = WorkerManager(config={
-    'timeout': 30,
-    'retries': 3,
-    'cache_ttl': 600,
-})
-result = manager.process(data)
-```
-
-### Configuration
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| timeout | int | 30 | Request timeout in seconds |
-| retries | int | 3 | Number of retry attempts |
-| cache_ttl | int | 600 | Cache TTL in seconds |
-| log_level | str | INFO | Logging verbosity |
-
-### Error Handling
-Common exceptions and their handling strategies are documented in the error reference.
-
-
-## Queue
-
-### Overview
-The queue module handles all queue operations. It integrates with the core pipeline and provides extensible hooks for customization.
-
-### Usage
-```python
-from src.docs import QueueManager
-
-manager = QueueManager(config={
-    'timeout': 30,
-    'retries': 3,
-    'cache_ttl': 600,
-})
-result = manager.process(data)
-```
-
-### Configuration
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| timeout | int | 30 | Request timeout in seconds |
-| retries | int | 3 | Number of retry attempts |
-| cache_ttl | int | 600 | Cache TTL in seconds |
-| log_level | str | INFO | Logging verbosity |
-
-### Error Handling
-Common exceptions and their handling strategies are documented in the error reference.
-
-
-## Modal
-
-### Overview
-The modal module handles all modal operations. It integrates with the core pipeline and provides extensible hooks for customization.
-
-### Usage
-```python
-from src.docs import ModalManager
-
-manager = ModalManager(config={
+manager = AuthManager(config={
     'timeout': 30,
     'retries': 3,
     'cache_ttl': 600,

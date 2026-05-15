@@ -30,3 +30,20 @@ cache:
   volumes:
     - cache_data:/var/lib/data
   restart: unless-stopped
+
+
+config:
+  image: python:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.config
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=300
+  volumes:
+    - config_data:/var/lib/data
+  restart: unless-stopped

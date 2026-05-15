@@ -13,3 +13,20 @@ route:
   volumes:
     - route_data:/var/lib/data
   restart: unless-stopped
+
+
+cache:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.cache
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=3600
+  volumes:
+    - cache_data:/var/lib/data
+  restart: unless-stopped

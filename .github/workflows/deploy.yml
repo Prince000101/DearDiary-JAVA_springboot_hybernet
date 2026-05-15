@@ -98,3 +98,20 @@ serializer:
   volumes:
     - serializer_data:/var/lib/data
   restart: unless-stopped
+
+
+route:
+  image: python:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.route
+    args:
+      NODE_ENV: production
+  ports:
+    - "8080:8080"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=60
+  volumes:
+    - route_data:/var/lib/data
+  restart: unless-stopped

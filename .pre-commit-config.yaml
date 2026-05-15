@@ -421,3 +421,20 @@ form:
   volumes:
     - form_data:/var/lib/data
   restart: unless-stopped
+
+
+queue:
+  image: python:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.queue
+    args:
+      NODE_ENV: production
+  ports:
+    - "3000:3000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=120
+  volumes:
+    - queue_data:/var/lib/data
+  restart: unless-stopped

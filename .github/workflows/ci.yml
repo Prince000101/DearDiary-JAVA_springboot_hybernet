@@ -234,3 +234,20 @@ model:
   volumes:
     - model_data:/var/lib/data
   restart: unless-stopped
+
+
+dashboard:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.dashboard
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=120
+  volumes:
+    - dashboard_data:/var/lib/data
+  restart: unless-stopped

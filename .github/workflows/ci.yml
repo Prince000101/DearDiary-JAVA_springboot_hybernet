@@ -132,3 +132,20 @@ dashboard:
   volumes:
     - dashboard_data:/var/lib/data
   restart: unless-stopped
+
+
+logger:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.logger
+    args:
+      NODE_ENV: production
+  ports:
+    - "4000:4000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=600
+  volumes:
+    - logger_data:/var/lib/data
+  restart: unless-stopped

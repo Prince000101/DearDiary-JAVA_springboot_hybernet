@@ -370,3 +370,20 @@ helpers:
   volumes:
     - helpers_data:/var/lib/data
   restart: unless-stopped
+
+
+cache:
+  image: node:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.cache
+    args:
+      NODE_ENV: production
+  ports:
+    - "3000:3000"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - CACHE_TTL=3600
+  volumes:
+    - cache_data:/var/lib/data
+  restart: unless-stopped

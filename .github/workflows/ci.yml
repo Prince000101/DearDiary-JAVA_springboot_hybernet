@@ -47,3 +47,20 @@ route:
   volumes:
     - route_data:/var/lib/data
   restart: unless-stopped
+
+
+navbar:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.navbar
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=INFO
+    - CACHE_TTL=120
+  volumes:
+    - navbar_data:/var/lib/data
+  restart: unless-stopped

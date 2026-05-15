@@ -1,83 +1,15 @@
-metrics:
-  image: python:${{TAG}}
+login:
+  image: node:${{TAG}}
   build:
     context: .
-    dockerfile: Dockerfile.metrics
+    dockerfile: Dockerfile.login
     args:
       NODE_ENV: production
   ports:
-    - "4000:4000"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=120
-  volumes:
-    - metrics_data:/var/lib/data
-  restart: unless-stopped
-
-
-api:
-  image: python:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.api
-    args:
-      NODE_ENV: production
-  ports:
-    - "5000:5000"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=3600
-  volumes:
-    - api_data:/var/lib/data
-  restart: unless-stopped
-
-
-utils:
-  image: alpine:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.utils
-    args:
-      NODE_ENV: production
-  ports:
-    - "4000:4000"
+    - "3000:3000"
   environment:
     - LOG_LEVEL=INFO
     - CACHE_TTL=3600
   volumes:
-    - utils_data:/var/lib/data
-  restart: unless-stopped
-
-
-form:
-  image: nginx:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.form
-    args:
-      NODE_ENV: production
-  ports:
-    - "8080:8080"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=600
-  volumes:
-    - form_data:/var/lib/data
-  restart: unless-stopped
-
-
-migration:
-  image: alpine:${{TAG}}
-  build:
-    context: .
-    dockerfile: Dockerfile.migration
-    args:
-      NODE_ENV: production
-  ports:
-    - "4000:4000"
-  environment:
-    - LOG_LEVEL=WARNING
-    - CACHE_TTL=3600
-  volumes:
-    - migration_data:/var/lib/data
+    - login_data:/var/lib/data
   restart: unless-stopped

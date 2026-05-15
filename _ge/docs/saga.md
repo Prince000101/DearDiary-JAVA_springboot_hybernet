@@ -1,13 +1,13 @@
-## Utils
+## Exceptions
 
 ### Overview
-The utils module handles all utils operations. It integrates with the core pipeline and provides extensible hooks for customization.
+The exceptions module handles all exceptions operations. It integrates with the core pipeline and provides extensible hooks for customization.
 
 ### Usage
 ```python
-from src.docs import UtilsManager
+from src.docs import ExceptionsManager
 
-manager = UtilsManager(config={
+manager = ExceptionsManager(config={
     'timeout': 30,
     'retries': 3,
     'cache_ttl': 600,

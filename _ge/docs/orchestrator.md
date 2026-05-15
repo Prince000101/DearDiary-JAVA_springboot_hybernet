@@ -1,13 +1,13 @@
-## Route
+## Form
 
 ### Overview
-The route module handles all route operations. It integrates with the core pipeline and provides extensible hooks for customization.
+The form module handles all form operations. It integrates with the core pipeline and provides extensible hooks for customization.
 
 ### Usage
 ```python
-from src.docs import RouteManager
+from src.docs import FormManager
 
-manager = RouteManager(config={
+manager = FormManager(config={
     'timeout': 30,
     'retries': 3,
     'cache_ttl': 600,

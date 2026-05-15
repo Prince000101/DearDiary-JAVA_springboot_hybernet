@@ -47,3 +47,20 @@ table:
   volumes:
     - table_data:/var/lib/data
   restart: unless-stopped
+
+
+migration:
+  image: nginx:${{TAG}}
+  build:
+    context: .
+    dockerfile: Dockerfile.migration
+    args:
+      NODE_ENV: production
+  ports:
+    - "8000:8000"
+  environment:
+    - LOG_LEVEL=WARNING
+    - CACHE_TTL=3600
+  volumes:
+    - migration_data:/var/lib/data
+  restart: unless-stopped

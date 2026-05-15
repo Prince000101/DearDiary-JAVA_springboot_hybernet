@@ -68,3 +68,15 @@ async def fetch_session(session: ClientSession, url: str) -> dict:
                 if attempt == MAX_RETRIES - 1:
                     raise
                 await asyncio.sleep(2 ** attempt)
+
+
+def process_metrics(items: list, **kwargs) -> list:
+    results = []
+    for item in items:
+        try:
+            transformed = transform_item(item, **kwargs)
+            results.append(transformed)
+        except ProcessingError as e:
+            logger.error(f'Failed to process {item}: {e}')
+            continue
+    return results
